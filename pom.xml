@@ -11,7 +11,7 @@
    <groupId>org.webjars</groupId>
     <artifactId>tabler</artifactId>
     <name>tabler</name>
-    <version>0.0.33</version>
+    <version>0.0.34-SNAPSHOT</version>
     <packaging>jar</packaging>
     <description>WebJar for tabler. Tabler is free and open-source HTML Dashboard UI Kit built on Bootstrap 4 https://tabler.github.io/</description>
     <url>https://github.com/tabler/tabler</url>
@@ -46,6 +46,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <sourceUrl>https://github.com/tabler/tabler/archive</sourceUrl>
         <destDir>${project.build.outputDirectory}/META-INF/resources/webjars/${project.artifactId}/${project.version}</destDir>
+        <tabler.version>dev</tabler.version>
     </properties>
 
     <build>
@@ -60,7 +61,7 @@
                         <goals><goal>download-single</goal></goals>
                         <configuration>
                             <url>${sourceUrl}</url>
-                            <fromFile>v${project.version}.zip</fromFile>
+                            <fromFile>${tabler.version}.zip</fromFile>
                             <toFile>${project.build.directory}/tabler.zip</toFile>
                         </configuration>
                     </execution>
@@ -76,7 +77,28 @@
                         <configuration>
                             <target>
                                 <echo message="unzip archive"/>
-                                <unzip src="${project.build.directory}/tabler.zip" dest="${project.build.directory}"/>
+                                <unzip src="${project.build.directory}/tabler.zip" dest="${project.build.directory}" />
+                                <echo message="running gem and bundler"/>
+                                <exec executable="gem" failonerror="true" dir="${project.build.directory}/tabler-${tabler.version}">
+                                    <env key="GEM_HOME" value="${project.basedir}/gems"/>
+                                    <arg value="install" />
+                                    <arg value="bundler" />
+                                </exec>
+                                <exec executable="${project.basedir}/gems/bin/bundle" failonerror="true" dir="${project.build.directory}/tabler-${tabler.version}">
+                                    <env key="GEM_HOME" value="${project.basedir}/gems"/>
+                                    <arg value="install" />
+                                </exec>
+                                <echo message="running NPM"/>
+                                <symlink link="${project.build.directory}/tabler-${tabler.version}/node_modules" resource="${project.basedir}/node_modules" overwrite="true" />
+                                <exec executable="npm" failonerror="true" dir="${project.build.directory}/tabler-${tabler.version}">
+                                    <env key="GEM_HOME" value="${project.basedir}/gems"/>
+                                    <arg value="install" />
+                                </exec>
+                                <exec executable="npm" failonerror="true" dir="${project.build.directory}/tabler-${tabler.version}">
+                                    <env key="GEM_HOME" value="${project.basedir}/gems"/>
+                                    <arg value="run" />
+                                    <arg value="build" />
+                                </exec>
                                 <echo message="moving resources" />
                                 <move todir="${destDir}">
                                     <fileset dir="${project.build.directory}/tabler-${project.version}/dist">
