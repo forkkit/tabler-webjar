@@ -80,8 +80,6 @@
                                 <property environment="env" />
                                 <property name="env.GEM_HOME" value="${project.basedir}/gems" />
                                 <property name="env.NODE_MODULES_HOME" value="${project.basedir}/node_modules" />
-                                <mkdir dir="${env.GEM_HOME}" />
-                                <mkdir dir="${env.NODE_MODULES_HOME}" />
                                 <echo message="unzip archive"/>
                                 <unzip src="${project.build.directory}/tabler.zip" dest="${project.build.directory}" />
                                 <echo message="running gem and bundler"/>
