@@ -79,7 +79,6 @@
                                 <echo message="prepare environment"/>
                                 <property environment="env" />
                                 <property name="env.GEM_HOME" value="${project.basedir}/gems" />
-                                <property name="env.NODE_MODULES_HOME" value="${project.basedir}/node_modules" />
                                 <echo message="unzip archive"/>
                                 <unzip src="${project.build.directory}/tabler.zip" dest="${project.build.directory}" />
                                 <echo message="running gem and bundler"/>
@@ -92,7 +91,6 @@
                                     <env key="PATH" value="${env.GEM_HOME}/bin:${env.PATH}"/>
                                     <arg value="install" />
                                 </exec>
-                                <symlink link="${project.build.directory}/tabler-${tabler.version}/node_modules" resource="${env.NODE_MODULES_HOME}" overwrite="true" />
                                 <echo message="running NPM cache verify"/>
                                 <exec executable="npm" failonerror="true" dir="${project.build.directory}/tabler-${tabler.version}">
                                     <env key="PATH" value="${env.GEM_HOME}/bin:${env.PATH}"/>
