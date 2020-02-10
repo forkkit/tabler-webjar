@@ -92,36 +92,36 @@
                                     <env key="PATH" value="${env.GEM_HOME}/bin:${env.PATH}"/>
                                     <arg value="install" />
                                 </exec>
-                                <echo message="running NPM"/>
                                 <symlink link="${project.build.directory}/tabler-${tabler.version}/node_modules" resource="${env.NODE_MODULES_HOME}" overwrite="true" />
-                                <exec executable="npm" failonerror="true" dir="${project.build.directory}/tabler-${tabler.version}">
-                                    <env key="PATH" value="${env.GEM_HOME}/bin:${env.PATH}"/>
-                                    <arg value="install" />
-                                    <arg value="npm" />
-                                    <arg value="-g" />
-                                </exec>
+                                <echo message="running NPM cache verify"/>
                                 <exec executable="npm" failonerror="true" dir="${project.build.directory}/tabler-${tabler.version}">
                                     <env key="PATH" value="${env.GEM_HOME}/bin:${env.PATH}"/>
                                     <arg value="cache" />
                                     <arg value="verify" />
                                 </exec>
+                                <echo message="running NPM install peers"/>
                                 <exec executable="npm" failonerror="true" dir="${project.build.directory}/tabler-${tabler.version}">
                                     <env key="PATH" value="${env.GEM_HOME}/bin:${env.PATH}"/>
                                     <arg value="install" />
                                     <arg value="--save-dev" />
+                                    <arg value="--force" />
                                     <arg value="@babel/core" />
                                     <arg value="@babel/preset-env" />
                                     <arg value="stylelint" />
                                     <arg value="autoprefixer" />
                                 </exec>
+                                <echo message="running NPM install"/>
                                 <exec executable="npm" failonerror="true" dir="${project.build.directory}/tabler-${tabler.version}">
                                     <env key="PATH" value="${env.GEM_HOME}/bin:${env.PATH}"/>
                                     <arg value="install" />
+                                    <arg value="--force" />
                                 </exec>
+                                <echo message="running NPM build"/>
                                 <exec executable="npm" failonerror="true" dir="${project.build.directory}/tabler-${tabler.version}">
                                     <env key="PATH" value="${env.GEM_HOME}/bin:${env.PATH}"/>
                                     <arg value="run" />
                                     <arg value="build" />
+                                    <arg value="--force" />
                                 </exec>
                                 <echo message="moving resources" />
                                 <move todir="${destDir}">
