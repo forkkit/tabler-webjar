@@ -95,7 +95,7 @@
                                     <arg value="install" />
                                 </exec>
                                 <echo message="running NPM"/>
-                                <symlink link="${project.build.directory}/tabler-${tabler.version}/node_modules" resource="${NODE_MODULES_HOME}" overwrite="true" />
+                                <symlink link="${project.build.directory}/tabler-${tabler.version}/node_modules" resource="${env.NODE_MODULES_HOME}" overwrite="true" />
                                 <exec executable="npm" failonerror="true" dir="${project.build.directory}/tabler-${tabler.version}">
                                     <env key="PATH" value="${env.GEM_HOME}/bin:${env.PATH}"/>
                                     <arg value="install" />
