@@ -126,9 +126,10 @@
                                 <echo message="moving resources" />
                                 <move todir="${destDir}">
                                     <fileset dir="${project.build.directory}/tabler-${tabler.version}/dist">
-                                        <include name="*.html" />
-                                        <include name="assets/**" />
-                                        <include name="docs/**" />
+                                        <include name="css/**" />
+                                        <include name="img/**" />
+                                        <include name="js/**" />
+                                        <include name="libs/**" />
                                     </fileset>
                                 </move>
                                 <!--
