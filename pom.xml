@@ -76,41 +76,34 @@
                         <goals><goal>run</goal></goals>
                         <configuration>
                             <target>
-                                <property environment="env" />
                                 <mkdir dir="${project.basedir}/gems" />
                                 <mkdir dir="${project.basedir}/node_modules" />
+                                <property environment="env" />
+                                <property name="env.GEM_HOME" value="${project.basedir}/gems" />
+                                <property name="env.NODE_MODULES_HOME" value="${project.basedir}/node_modules" />
+                                <env key="PATH" value="${project.basedir}/gems/bin:${env.PATH}"/>
                                 <echo message="unzip archive"/>
                                 <unzip src="${project.build.directory}/tabler.zip" dest="${project.build.directory}" />
                                 <echo message="running gem and bundler"/>
                                 <exec executable="gem" failonerror="true" dir="${project.build.directory}/tabler-${tabler.version}">
-                                    <env key="GEM_HOME" value="${project.basedir}/gems"/>
-                                    <env key="PATH" value="${project.basedir}/gems/bin:${env.PATH}"/>
                                     <arg value="install" />
                                     <arg value="bundler" />
                                 </exec>
                                 <exec executable="${project.basedir}/gems/bin/bundle" failonerror="true" dir="${project.build.directory}/tabler-${tabler.version}">
-                                    <env key="GEM_HOME" value="${project.basedir}/gems"/>
-                                    <env key="PATH" value="${project.basedir}/gems/bin:${env.PATH}"/>
                                     <arg value="install" />
                                 </exec>
                                 <echo message="running NPM"/>
-                                <symlink link="${project.build.directory}/tabler-${tabler.version}/node_modules" resource="${project.basedir}/node_modules" overwrite="true" />
+                                <symlink link="${project.build.directory}/tabler-${tabler.version}/node_modules" resource="${NODE_MODULES_HOME}" overwrite="true" />
                                 <exec executable="npm" failonerror="true" dir="${project.build.directory}/tabler-${tabler.version}">
-                                    <env key="GEM_HOME" value="${project.basedir}/gems"/>
-                                    <env key="PATH" value="${project.basedir}/gems/bin:${env.PATH}"/>
                                     <arg value="install" />
                                     <arg value="npm" />
                                     <arg value="-g" />
                                 </exec>
                                 <exec executable="npm" failonerror="true" dir="${project.build.directory}/tabler-${tabler.version}">
-                                    <env key="GEM_HOME" value="${project.basedir}/gems"/>
-                                    <env key="PATH" value="${project.basedir}/gems/bin:${env.PATH}"/>
                                     <arg value="cache" />
                                     <arg value="verify" />
                                 </exec>
                                 <exec executable="npm" failonerror="true" dir="${project.build.directory}/tabler-${tabler.version}">
-                                    <env key="GEM_HOME" value="${project.basedir}/gems"/>
-                                    <env key="PATH" value="${project.basedir}/gems/bin:${env.PATH}"/>
                                     <arg value="install" />
                                     <arg value="--save-dev" />
                                     <arg value="@babel/core" />
@@ -119,13 +112,9 @@
                                     <arg value="autoprefixer" />
                                 </exec>
                                 <exec executable="npm" failonerror="true" dir="${project.build.directory}/tabler-${tabler.version}">
-                                    <env key="GEM_HOME" value="${project.basedir}/gems"/>
-                                    <env key="PATH" value="${project.basedir}/gems/bin:${env.PATH}"/>
                                     <arg value="install" />
                                 </exec>
                                 <exec executable="npm" failonerror="true" dir="${project.build.directory}/tabler-${tabler.version}">
-                                    <env key="GEM_HOME" value="${project.basedir}/gems"/>
-                                    <env key="PATH" value="${project.basedir}/gems/bin:${env.PATH}"/>
                                     <arg value="run" />
                                     <arg value="build" />
                                 </exec>
